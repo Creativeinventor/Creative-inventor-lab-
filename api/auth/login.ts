@@ -84,7 +84,7 @@ export default async function handler(req: Request | any, res: Response | any) {
               body: JSON.stringify({ email: resolvedEmail, password, returnSecureToken: true }),
             }
           );
-          const authData = await authRes.json();
+          const authData = (await authRes.json()) as any;
 
           if (!authRes.ok) {
             const errCode = authData.error?.message;
