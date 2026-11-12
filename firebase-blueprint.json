@@ -1,0 +1,111 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role, subscription status, and credentials metadata.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["ADMIN", "SUBSCRIBER"] },
+        "status": { "type": "string", "enum": ["ACTIVE", "EXPIRED", "DISABLED"] },
+        "subscriptionStart": { "type": "string" },
+        "subscriptionExpiry": { "type": "string" },
+        "durationDays": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "lastLogin": { "type": "string" }
+      },
+      "required": ["uid", "userId", "email", "role", "status"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Electronics or DIY project with metadata and downloads.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "thumbnailUrl": { "type": "string" },
+        "instructions": { "type": "string" },
+        "version": { "type": "string" },
+        "isPublished": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "title", "category"]
+    },
+    "ProjectFile": {
+      "title": "ProjectFile",
+      "description": "Individual file metadata for a project.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "projectId": { "type": "string" },
+        "fileName": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "fileSizeBytes": { "type": "number" },
+        "fileType": { "type": "string" },
+        "isAvailable": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "projectId", "fileName", "storagePath"]
+    },
+    "ProjectAssignment": {
+      "title": "ProjectAssignment",
+      "description": "Assignment mapping project access to a subscriber.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "projectId": { "type": "string" },
+        "assignedAt": { "type": "string" },
+        "assignedBy": { "type": "string" }
+      },
+      "required": ["userId", "projectId", "assignedAt"]
+    },
+    "DownloadLog": {
+      "title": "DownloadLog",
+      "description": "Audit log for every file download attempt.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userCode": { "type": "string" },
+        "projectId": { "type": "string" },
+        "projectTitle": { "type": "string" },
+        "fileId": { "type": "string" },
+        "fileName": { "type": "string" },
+        "ipAddress": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["userId", "projectId", "fileId", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "User" },
+      "description": "Stores user profiles and subscription status."
+    },
+    "/projects/{projectId}": {
+      "schema": { "$ref": "Project" },
+      "description": "Stores DIY and electronics project details."
+    },
+    "/projectFiles/{fileId}": {
+      "schema": { "$ref": "ProjectFile" },
+      "description": "Stores file metadata for projects."
+    },
+    "/projectAssignments/{assignmentId}": {
+      "schema": { "$ref": "ProjectAssignment" },
+      "description": "Maps project authorization to subscribers."
+    },
+    "/downloadLogs/{logId}": {
+      "schema": { "$ref": "DownloadLog" },
+      "description": "Records every download event for auditing."
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Creative Inventor Project Portal",
+  "description": "Production-grade subscription-based project download portal for Creative Inventor YouTube channel community members.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
