@@ -9,3 +9,4 @@ coverage/
 *.pem
 serviceAccountKey*.json
 firebase-admin-key*.json
+api/**/*.js
